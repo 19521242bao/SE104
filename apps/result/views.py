@@ -78,15 +78,18 @@ def all_results_view(request):
     for subject in results:
       if subject.student == result.student:
         subjects.append(subject)
-        test_total += subject.test_score
-        exam_total += subject.exam_score
-
+        subject.test_score = float(subject.test_score)
+        subject.exam_score = float(subject.exam_score)
+        test_total = (test_total + subject.test_score) 
+        exam_total = (exam_total + subject.exam_score) 
+    test_total = test_total / len(subjects)
+    exam_total = exam_total / len(subjects)
     bulk[result.student.id] = {
       "student": result.student,
       "subjects": subjects,
       "test_total": test_total,
       "exam_total": exam_total,
-      "total_total": test_total + exam_total
+      "total_total": round((test_total + exam_total)/2, 2)
     }
 
   context = {
