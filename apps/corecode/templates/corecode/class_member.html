@@ -13,7 +13,7 @@ Classes
     Add new class
   </a>
 {% endblock breadcrumb %}
-  
+
 
 {% block content %}
   <div class="row">
@@ -21,17 +21,17 @@ Classes
 
         <table class="table table-bordered">
           <tbody>
-            {% for object in object_list %}
-            <tr class='clickable-row' data-href="{% url 'class-detail' object.id %}">
-              <td>{{ object.name }}</td>
-              <td><a href="{% url 'class-update' object.id %}"><i
-                    class="fa fa-edit"></i></a> <a
-                  href="{% url 'class-delete' object.id %}"><i
-                    class="fa fa-trash-alt"></i></a></td>
-            </tr>
-            {% endfor %}
+             <div class="form-group">
+     <label>Class </label>
+     <select class="form-control" name="class" id="class">
+         {% for object in object_list %}
+             <option value="{{ object.id }}">{{ object.name }}</option>
+         {% endfor %}
+     </select>
+ </div>
           </tbody>
         </table>
+
 
     </div>
   </div>
@@ -70,4 +70,5 @@ Classes
   </div>
 
 {% endblock content %}
+
 

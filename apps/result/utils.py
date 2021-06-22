@@ -6,6 +6,12 @@ def score_grade(score):
   elif score < 6.5 and score >= 5:
     return 'C'
   elif score >= 0 and score < 5:
+<<<<<<< Updated upstream
     return 'D' 
   else:
     return "Invalid Score"
+=======
+    return 'D'
+  else:
+    return "Invalid Score"
+>>>>>>> Stashed changes

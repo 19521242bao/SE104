@@ -3,12 +3,16 @@ from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-
+from apps.students.models import Student
 from .models import SiteConfig, AcademicSession, AcademicTerm, StudentClass, Subject
-from .forms import SiteConfigForm, AcademicTermForm, AcademicSessionForm, StudentClassForm, SubjectForm, CurrentSessionForm
+from .forms import SiteConfigForm, AcademicTermForm, AcademicSessionForm, StudentClassForm, SubjectForm, CurrentSessionForm,CreateStudent_ClassForm
+from apps.students.models import Student
+from ..finance.models import Invoice
+
 
 class IndexView(LoginRequiredMixin, TemplateView):
       template_name = 'index.html'
@@ -168,6 +172,47 @@ class ClassUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'corecode/mgt_form.html'
 
 
+class ClassDetailView(generic.DetailView):
+    model=StudentClass
+    template_name = "corecode/class_detail.html"
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(ClassDetailView, self).get_context_data(**kwargs)
+        # Add extra context from another model
+        context['students'] = Student.objects.filter(current_class=self.object)
+        return context
+def create_class_student(request):
+  students = Student.objects.all()
+  if request.method == 'POST':
+
+    #after visiting the second page
+    if 'finish' in request.POST:
+      form = CreateStudent_ClassForm(request.POST)
+      if form.is_valid():
+        current_class= form.cleaned_data['current_class']
+        students = request.POST['students']
+        for student in students.split(','):
+          stu = Student.objects.get(pk=student)
+          stu.current_class=current_class
+          stu.save(update_fields=['current_class'])
+
+        return redirect('classes')
+
+    #after choosing students
+    id_list = request.POST.getlist('students')
+    print(id_list)
+    if id_list:
+      form = CreateStudent_ClassForm(initial={"session": request.current_session, "term":request.current_term})
+      studentlist = ','.join(id_list)
+      print("sau student list")
+      print(studentlist)
+      return render(request, 'corecode/create_result_page2.html', {"students": studentlist, "form": form, "count":len(id_list)})
+    else:
+      messages.warning(request, "You didnt select any student.")
+  return render(request, 'corecode/create_result.html', {"students": students})
+
+
 class ClassDeleteView(LoginRequiredMixin, DeleteView):
     model = StudentClass
     success_url = reverse_lazy('classes')
@@ -192,7 +237,16 @@ class SubjectListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
         return context
 
 
+class SubjectDetailView(generic.DetailView):
+    model=StudentClass
+    template_name = "corecode/class_detail.html"
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(SubjectDetailView, self).get_context_data(**kwargs)
+        # Add extra context from another model
+        context['students'] = Student.objects.filter(current_class=self.object)
+        return context
 class SubjectCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Subject
     form_class = SubjectForm

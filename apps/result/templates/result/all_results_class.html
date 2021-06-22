@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block fullcard %}
+
+  {% for key, result in results.items %}
+    <div class="card">
+      <div class="card-header">
+        {{result.student}}
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th></th>
+              <th>Class</th>
+              <th>Test Score</th>
+              <th>Exam Score</th>
+              <th>Total Score</th>
+              <th>Loai A</th>
+                <th>Loai B</th>
+                <th>Loai C</th>
+                <th>Loai D</th>
+            </tr>
+          </thead>
+
+          <tfoot>
+            <tr>
+              <td colspan="1"></td>
+              <td>{{ result.name_class }}</td>
+              <td>{{ result.test_average }}</td>
+              <td>{{ result.exam_average }}</td>
+              <td>{{ result.total_average }}</td>
+              <td>{{ result.rankA }}</td>
+                <td>{{ result.rankB }}</td>
+                <td>{{ result.rankC }}</td>
+                <td>{{ result.rankD }}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+
+
+
+
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock fullcard %}

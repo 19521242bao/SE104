@@ -4,12 +4,13 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.forms import widgets
 from django.urls import reverse_lazy
-
+from django.db.models import F
 from apps.finance.models import Invoice
+from apps.result.models import Result
 
 from .models import Student, StudentBulkUpload
 
@@ -19,7 +20,13 @@ def student_list(request):
   students = Student.objects.all()
   return render(request, 'students/student_list.html', {"students":students})
 
-
+class StudentClassView(LoginRequiredMixin,ListView):
+    model=Student
+    template_name = "students/student_class.html"
+    def get_queryset(self, *args, **kwargs):
+        qs = super(StudentClassView, self).get_queryset()
+        #qs = qs.order_by("-current_class")
+        return qs
 class StudentDetailView(LoginRequiredMixin, DetailView):
     model = Student
     template_name = "students/student_detail.html"
@@ -27,6 +34,7 @@ class StudentDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(StudentDetailView, self).get_context_data(**kwargs)
         context['payments'] = Invoice.objects.filter(student=self.object)
+        context['results']=Result.objects.filter(student=self.object)
         return context
 
 

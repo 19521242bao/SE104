@@ -50,7 +50,6 @@ class Subject(models.Model):
 
 class StudentClass(models.Model):
   name = models.CharField(max_length=200, unique=True)
-
   class Meta:
     verbose_name = "Class"
     verbose_name_plural = "Classes"
