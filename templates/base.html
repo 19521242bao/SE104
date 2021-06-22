@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>{{ school_name | default:"Name_School" }}</title>
+  <title>{{ school_name | default:"MySchool" }}</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
@@ -76,7 +76,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="{% url 'home' %}" class="brand-link">{{ school_name | default:"Name_School" }}</a>
+      <a href="{% url 'home' %}" class="brand-link">{{ school_name | default:"MySchool" }}</a>
 
       <!-- Sidebar -->
       <div class="sidebar">
@@ -108,6 +108,31 @@
                 <i class="nav-icon fas fa-money-bill-alt"></i>
                 <p>
                   Invoices
+                </p>
+              </a>
+            </li>
+              <li class="nav-header">Class</li>
+            <li class="nav-item">
+              <a href="{% url 'classes' %}" class="nav-link">
+                <i class="nav-icon fas fa-money-bill-alt"></i>
+                <p>
+                  Class
+                </p>
+              </a>
+            </li>
+              <li class="nav-item">
+              <a href="{% url 'classes' %}" class="nav-link">
+                <i class="nav-icon fas fa-money-bill-alt"></i>
+                <p>
+                  Class List
+                </p>
+              </a>
+            </li>
+               <li class="nav-item">
+              <a href="{% url 'create_student_class' %}" class="nav-link">
+                <i class="nav-icon fas fa-money-bill-alt"></i>
+                <p>
+                  Member Class
                 </p>
               </a>
             </li>
