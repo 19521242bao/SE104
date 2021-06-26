@@ -6,6 +6,7 @@ from apps.corecode.models import AcademicSession, AcademicTerm, Subject,StudentC
 from .models import Result
 
 class CreateResults(forms.Form):
+  current_class=forms.ModelChoiceField(queryset=StudentClass.objects.all())
   session = forms.ModelChoiceField(queryset=AcademicSession.objects.all())
   term = forms.ModelChoiceField(queryset=AcademicTerm.objects.all())
   subjects = forms.ModelMultipleChoiceField(

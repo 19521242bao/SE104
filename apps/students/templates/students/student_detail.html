@@ -38,7 +38,7 @@
             <h4>{{ object.registration_number }} </h4>
           </div>
         </div>
-        <h5>{{ object.current_class }} </h5>
+        <h5>Class: {{ object.current_class }} </h5>
         <h5>{{ object.get_gender_display }} | {{ object.get_current_status_display }}</h5>
 
       </div>
@@ -117,9 +117,10 @@
         <thead class="thead-light">
           <tr>
             <th>Subject</th>
-            <th>test score</th>
-            <th>final score</th>
-
+            <th>Test score</th>
+            <th>Final score</th>
+            <th>Overall</th>
+            <th>Rank</th>
           </tr>
         </thead>
         <tbody>
@@ -128,15 +129,12 @@
               <td>{{ result.subject }}</td>
               <td>{{result.test_score}}</td>
               <td>{{result.exam_score}}</td>
+              <td>{{result.total_score}}</td>
+              <td>{{result.grade}}</td>
               </tr>
           {% endfor %}
         </tbody>
       </table>
-
-
-    <h4>Result</h4>
-
-
 
 
 {% endblock content %}

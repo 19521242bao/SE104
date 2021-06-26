@@ -7,7 +7,7 @@ from django.views.generic import ListView
 
 from apps.corecode.models import AcademicSession, AcademicTerm,StudentClass
 from apps.students.models import Student
-
+from .utils import score_grade
 from .models import Result
 from .forms import CreateResults, EditResults
 
@@ -25,11 +25,11 @@ def create_result(request):
         session = form.cleaned_data['session']
         term = form.cleaned_data['term']
         students = request.POST['students']
-        current_class=form.cleaned_data['current_class']
+        current_class = form.cleaned_data['current_class']
         results = []
-        print(subjects)
-        print(students)
-        print(current_class)
+        #print(subjects)
+       #print(students)
+        #print(current_class)
         for student in students.split(','):
           stu = Student.objects.get(pk=student)
           if stu.current_class:
@@ -112,76 +112,87 @@ def all_results_view(request):
   #     "exam_total": exam_total,
   #     "total_total": round((test_total + exam_total) / 2, 2)
   #   }
-  classlist=[]
+  def find_student(arr, target):
+    for i in range(1,len(arr)):
+      if arr[i][0] == target:
+        return i
+    return -1
+  grade=[]
+  t = len(results)
+  classlist=[] #Ten cac lop
+  grading_class = [["", 0, 0, 0, 0]] # [Ten class, A, B, C, D]
+  std = [["example", 0, 0, "A", "class"]] # [Ten hoc sinh, Diem Trung Binh, cnt , grading, Class]
   for result in results:
-<<<<<<< Updated upstream
-    test_total = 0
-    exam_total = 0
-    subjects = []
-    for subject in results:
-      if subject.student == result.student:
-        subjects.append(subject)
-        subject.test_score = float(subject.test_score)
-        subject.exam_score = float(subject.exam_score)
-        test_total = (test_total + subject.test_score) 
-        exam_total = (exam_total + subject.exam_score) 
-    test_total = test_total / len(subjects)
-    exam_total = exam_total / len(subjects)
-    bulk[result.student.id] = {
-      "student": result.student,
-      "subjects": subjects,
-      "test_total": test_total,
-      "exam_total": exam_total,
-      "total_total": round((test_total + exam_total)/2, 2)
-    }
-=======
     test_class = 0
     exam_class = 0
     total_average=0
     total_total=0
-    grade=dict()
+    
     class_member= []
-    countA=0
-    countD=0
-    countC=0
-    countB=0
+    #countA=0
+    #countD=0
+    #countC=0
+    #countB=0
+    #print(result)
+
     if result.current_class not in classlist:
       classlist.append(result.current_class)
+      grading_class.append([classlist[-1],0,0,0,0])
       for student in results:
+        grade.append(result.current_class)
         if student.current_class == result.current_class:
-          class_member.append(student)
+          class_member.append(student.student)
+          if find_student(std, student.student) == -1 or len(std) == 1:
+            std.append([student.student, 0, 0, "", student.current_class])
           exam_class+=student.exam_score
           test_class+=student.test_score
-          total_total=student.exam_score+student.test_score
-          score_rank=score_grade(total_total)
-          if score_rank=='A':
-            countA+=1
-          if score_rank=='B':
-            countB+=1
-          if score_rank=='C':
-            countC+=1
-          if score_rank=='D':
-            countD+=1
-      exam_average=exam_class/len(class_member)
-      test_average=test_class/(len(class_member))
-      print(class_member)
-      print(len(class_member))
-      bulk[result.current_class.id] = {
-              "name_class":result.current_class,
-              "students": class_member,
-              "test_average": test_average,
-              "exam_average": exam_average,
-              "total_average": round((test_average + exam_average) / 2, 3),
-              "rankA":countA,
-              "rankB": countB,
-              "rankC": countC,
-              "rankD": countD
-
-      }
+          total_total=(student.exam_score+student.test_score)/2
+          position_student_in_std = find_student(std, student.student)
+          std[position_student_in_std][1] += total_total
+          std[position_student_in_std][2] += 1
+          if std[position_student_in_std][2] == 2:
+            std[position_student_in_std][2] = 1
+            std[position_student_in_std][1] /= 2
 
 
->>>>>>> Stashed changes
+          
+      
+      #exam_average=exam_class/len(class_member)
+      #test_average=test_class/(len(class_member))
+      #print(class_member)
+      #print(len(class_member))
+      
 
+
+      #bulk[result.current_class.id] = {
+      #        "name_class":result.current_class,
+      #        "rankA": countA,
+      #        "rankB": countB,
+      #        "rankC": countC,
+      #        "rankD": countD
+      #}
+  for i in range(1, len(std)):
+    std[i][3] = score_grade(std[i][1])
+    for j in range(1,len(grading_class)):
+      if std[i][-1] == grading_class[j][0]:
+        if std[i][3] == "A":
+          grading_class[j][1] += 1
+        elif std[i][3] == "B":
+          grading_class[j][2] += 1
+        elif std[i][3] == "C":
+          grading_class[j][3] += 1
+        else:
+          grading_class[j][4] += 1
+
+  x = len(std)
+  for i in range(1, len(grading_class)):
+    bulk[grading_class[i][0]] = {
+              "name_class":grading_class[i][0],
+              "rankA": grading_class[i][1],
+              "rankB": grading_class[i][2],
+              "rankC": grading_class[i][3],
+              "rankD": grading_class[i][4]
+    }
   context = {
       "results": bulk
   }
@@ -219,14 +230,3 @@ def all_results_view(request):
 #
 #   }
 #   return render(request, 'result/all_results_class.html', subjects)
-def score_grade(score):
-  if score <= 10 and score >= 8:
-    return 'A'
-  elif score < 8 and score >= 6.5:
-    return 'B'
-  elif score < 6.5 and score >= 5:
-    return 'C'
-  elif score >= 0 and score < 5:
-    return 'D'
-  else:
-    return "Invalid Score"
