@@ -153,7 +153,7 @@ class ClassListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
   def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       context['form'] = StudentClassForm()
-      return context
+      return context 
 
 
 class ClassCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
