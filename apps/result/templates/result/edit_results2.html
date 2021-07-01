@@ -41,8 +41,9 @@ Update Results
       {% endfor %}
     </tbody>
   </table>
-
-  <input type="submit" class="btn btn-success" value="Save">
+    <input type="hidden" name="finish" value="True">
+    <input type="hidden" name="current_class" value="{{current_class }}">
+    <input type="submit" class="btn btn-success" value="Save">
   </form>
 
 {% endblock content %}

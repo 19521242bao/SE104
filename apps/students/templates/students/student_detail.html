@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+ {% extends 'base.html' %}
 {% load static %}
 
 {% block content-header %}
@@ -38,7 +38,7 @@
             <h4>{{ object.registration_number }} </h4>
           </div>
         </div>
-        <h5>{{ object.current_class }} </h5>
+        <h5>Class: {{ object.current_class }} </h5>
         <h5>{{ object.get_gender_display }} | {{ object.get_current_status_display }}</h5>
 
       </div>
@@ -95,22 +95,40 @@
             <th>balance</th>
           </tr>
         </thead>
-        <tbody>
-          {% for payment in payments %}
-            <tr class='clickable-row' data-href="{% url 'invoice-detail' payment.id %}">
-              <td>{{payment.session}} - {{payment.term}} - {{ payment.class_for}}</td>
-              <td>{{payment.total_amount_payable}}</td>
-              <td>{{payment.total_amount_paid}}</td>
-              <td>{{payment.balance}}</td>
-            </tr>
-          {% endfor %}
+
         </tbody>
       </table>
+
     {% else %}
-        <p>There are no payment history for {{object}}</p>
+
     {% endif %}
 
 
+<h4>Result</h4>
+      <table class="table table-sm table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Subject</th>
+            <th>Test score</th>
+            <th>Final score</th>
+            <th>Overall</th>
+            <th>Rank</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for result in results %}
+              <tr>
+
+              <td>{{ result.subject }}</td>
+              <td>{{result.test_score}}</td>
+              <td>{{result.exam_score}}</td>
+              <td>{{result.total_score}}</td>
+              <td>{{result.grade}}</td>
+              </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
 
 {% endblock content %}

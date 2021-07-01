@@ -22,7 +22,11 @@ class Result(models.Model):
     return f'{self.student} {self.session} {self.term} {self.subject}'
 
   def total_score(self):
-    return self.test_score + self.exam_score
+    return (self.test_score + self.exam_score)/2
 
   def grade(self):
     return score_grade(self.total_score())
+
+  # def save(self, *args, **kwargs):
+  #   if self.current_class!=self.student.current_class:
+  #     self.current_class=self.student.current_class

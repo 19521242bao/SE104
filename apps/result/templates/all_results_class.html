@@ -5,7 +5,7 @@
   {% for key, result in results.items %}
     <div class="card">
       <div class="card-header">
-        {{result.student}}
+
       </div>
       <div class="card-body">
         <table class="table table-bordered table-sm">
@@ -16,7 +16,6 @@
               <th>Test Score</th>
               <th>Exam Score</th>
               <th>Total Score</th>
-              <th>Grade</th>
             </tr>
           </thead>
           <tbody>
@@ -27,7 +26,7 @@
                 <td>{{ subject.test_score }}</td>
                 <td>{{ subject.exam_score }}</td>
                 <td>{{ subject.total_score }}</td>
-                <td>{{ subject.grade }}</td>
+
               </tr>
             {% endfor %}
           </tbody>
@@ -50,3 +49,8 @@
   {% endfor %}
 
 {% endblock fullcard %}
+<div class="form-group row">
+      {{ form.current_class.errors }}
+      <label class="col-2" for="{{ form.current_class.id_for_label }}">{{ form.current_class.label_tag}}</label>
+      <div class="col">{{ form.current_class | add_class:"form-control" }}</div>
+    </div>

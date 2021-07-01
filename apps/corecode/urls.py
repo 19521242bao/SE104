@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .views import create_class_student
 
 urlpatterns = [
   path('', views.IndexView.as_view(), name='home'),
@@ -27,6 +28,8 @@ urlpatterns = [
        views.ClassUpdateView.as_view(), name='class-update'),
   path('class/<int:pk>/delete/',
        views.ClassDeleteView.as_view(), name='class-delete'),
+  path('class/<int:pk>/', views.ClassDetailView.as_view(), name='class-detail'),
+  path('class/create_student',create_class_student,name='create_student_class'),
 
   path('subject/list/', views.SubjectListView.as_view(), name='subjects'),
   path('subject/create/', views.SubjectCreateView.as_view(),
@@ -35,5 +38,6 @@ urlpatterns = [
        views.SubjectUpdateView.as_view(), name='subject-update'),
   path('subject/<int:pk>/delete/',
        views.SubjectDeleteView.as_view(), name='subject-delete'),
-
+  path('subject/<int:pk>/delete/',
+         views.SubjectDeleteView.as_view(), name='subject-delete')
 ]

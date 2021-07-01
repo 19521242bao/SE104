@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block fullcard %}
+
+  {% for key, result in results.items %}
+    <div class="card">
+      <div class="card-header">
+        {{result.student}}
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th>Class</th>
+              <th>Loai A</th>
+                <th>Loai B</th>
+                <th>Loai C</th>
+                <th>Loai D</th>
+            </tr>
+          </thead>
+
+          <tfoot>
+            <tr>
+
+              <td>{{ result.name_class }}</td>
+              <td>{{ result.rankA }}</td>
+                <td>{{ result.rankB }}</td>
+                <td>{{ result.rankC }}</td>
+                <td>{{ result.rankD }}</td>
+            </tr>
+          </tfoot>
+        </table>
+
+
+
+
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock fullcard %}
