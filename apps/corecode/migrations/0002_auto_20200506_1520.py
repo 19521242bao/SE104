@@ -10,9 +10,9 @@ def default_site_config(apps, schema_editor):
 
     Config = apps.get_model('corecode', 'SiteConfig')
     Config.objects.bulk_create([
-        Config(key='school_name', value='My School'),
+        Config(key='school_name', value='Thu Khoa Nghia High School'),
         Config(key='school_slogan', value='A great school'),
-        Config(key='school_address', value='Lagos, Nigeria'),
+        Config(key='school_address', value='Chaudok, An Giang'),
     ])
 
     Session = apps.get_model('corecode', 'AcademicSession')
