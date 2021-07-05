@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+  Select all the subjects you want to create
+{% endblock title %}
+
+
+{% block content %}
+
+
+
+  <form method="POST">
+    {% csrf_token %}
+      {{ form.non_field_errors }}
+    <div class="form-group row">
+      {{ form.session.errors }}
+      <label class="col-2" for="{{ form.session.id_for_label }}">{{ form.session.label_tag}}</label>
+      <div class="col">{{ form.session | add_class:"form-control" }}</div>
+    </div>
+
+
+    <div class="form-group row">
+      {{ form.term.errors }}
+      <label class="col-2" for="{{ form.term.id_for_label }}">{{ form.term.label_tag}}</label>
+      <div class="col">{{ form.term | add_class:"form-control" }}</div>
+    </div>
+       <div class="form-group row">
+      {{ form.subjects.errors }}
+      <label class="col-2" for="{{ form.subjects.id_for_label }}">{{ form.subjects.label_tag}}</label>
+      <div class="col">{{ form.subjects | add_class:"form-control" }}</div>
+    </div>
+
+    <input type="submit" class="btn btn-success" value="Get">
+  </form>
+     {% for key, result in results.items %}
+    <div class="card">
+      <div class="card-header">
+        {{result.student}}
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-sm">
+          <thead class="thead-light">
+            <tr>
+                <th>Subject</th>
+              <th>Class</th>
+              <th>Number Student</th>
+                <th>Good Stduent</th>
+                <th>Ti le dat</th>
+                <th>Hoc ki</th>
+            </tr>
+          </thead>
+
+          <tfoot>
+            <tr>
+                <td>{{ result.name_subject }}</td>
+              <td>{{ result.name_class}}</td>
+              <td>{{ result.SL}}</td>
+                <td>{{ result.good }}</td>
+                <td>{{ result.percent }}%</td>
+                <td>{{ result.term }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock content %}

@@ -1,7 +1,13 @@
  {% extends 'base.html' %}
 {% load static %}
-
+{% block breadcrumb %}
+    <a class="btn btn-primary" href="{% url 'create_student_class' %}">
+        <i class="fas fa-plus"></i> Add new student
+    </a>
+{% endblock breadcrumb %}
 {% block content-header %}
+
+
 <div class="card-header">
   <div class="card-tools">
     <a href="#" class="btn btn-tool">Print</a>
@@ -24,7 +30,7 @@
 
 
           <div class="float-right">
-            <h4>Tên Lớp: {{ object.name}} </h4>
+            <h4>Lớp: {{ object.name}} </h4>
           </div>
         </div>
 
@@ -38,6 +44,7 @@
             <th>First name</th>
             <th>Surname</th>
             <th>Gender</th>
+            <th>Delete</th>
 
           </tr>
         </thead>
@@ -47,16 +54,31 @@
               <td>{{ forloop.counter }}</td>
               <td>{{student.firstname}}</td>
                 <td>{{student.surname}}</td>
-              <td>{{student.gender}}</td>
+              <td>{{student.gender}}</td><td>
+               <div class="float-right">
+                    <a href="{% url "delete_student_class" student.id  %}" class="btn btn-sm btn-info">Delete</a>
+
+                </div>
+              </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
     {% else %}
-        <p>There are no payment history for {{object}}</p>
+        <p>There are no student in class  {{object}}</p>
     {% endif %}
 
 
 
 
 {% endblock content %}
+ <tbody>
+      {% for student in students %}
+        <tr>
+
+          <td>{{student}} </td>
+          <td>{{student.current_class}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>

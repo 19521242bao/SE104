@@ -5,7 +5,7 @@
   {% for key, result in results.items %}
     <div class="card">
       <div class="card-header">
-        {{result.}
+
       </div>
       <div class="card-body">
         <table class="table table-bordered table-sm">
@@ -49,8 +49,3 @@
   {% endfor %}
 
 {% endblock fullcard %}
-<div class="form-group row">
-      {{ form.current_class.errors }}
-      <label class="col-2" for="{{ form.current_class.id_for_label }}">{{ form.current_class.label_tag}}</label>
-      <div class="col">{{ form.current_class | add_class:"form-control" }}</div>
-    </div>
