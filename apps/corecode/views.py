@@ -22,12 +22,14 @@ class IndexView(LoginRequiredMixin, TemplateView):
 def siteconfig_view(request):
   """ Site Config View """
   if request.method == 'POST':
+
     form = SiteConfigForm(request.POST)
     if form.is_valid():
       form.save()
       messages.success(request, 'Configurations successfully updated')
       return HttpResponseRedirect('site-config')
   else:
+    print("con heo ngu ngoc")
     form = SiteConfigForm(queryset=SiteConfig.objects.all())
 
   context = {"formset": form, "title": "Configuration"}
@@ -226,7 +228,14 @@ class ClassDeleteView(LoginRequiredMixin, DeleteView):
         messages.success(self.request, self.success_message.format(obj.name))
         return super(ClassDeleteView, self).delete(request, *args, **kwargs)
 
+def delete_student_class(request, pk):
+    student = Student.objects.get(id=pk)
+    class_filter=StudentClass.objects.filter(name=student.current_class)
+    id_class=((class_filter.values_list('id', flat=True)))[0]
 
+    student.current_class=None
+    student.save(update_fields=['current_class'])
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 class SubjectListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
     model = Subject
     template_name = 'corecode/subject_list.html'
