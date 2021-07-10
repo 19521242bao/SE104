@@ -4,9 +4,9 @@
 
 {% block breadcrumb %}
 <a class="btn btn-primary" href="{% url 'student-create' %}"><i
-    class="fas fa-plus"></i> New student</a>
+    class="fas fa-plus"></i> Thêm học sinh</a>
 <a class="btn btn-primary" href="{% url 'student-upload' %}"><i
-    class="fas fa-upload"></i> Upload students</a>
+    class="fas fa-upload"></i> Upload học sinh </a>
 {% endblock breadcrumb %}
 
 {% block content %}
@@ -15,12 +15,11 @@
       <thead class="thead-light">
         <tr>
           <th>S/N</th>
-          <th>Fullname</th>
-          <th>Registration Number</th>
-          <th>Current Class</th>
-          <th>Gender</th>
-          <th>Mobile Phone Number</th>
-          <th>Status</th>
+          <th>Họ tên</th>
+          <th>Email</th>
+          <th>Lớp</th>
+          <th>Giới tính</th>
+          <th>Số điện thoại</th>
         </tr>
       </thead>
       <tbody>
@@ -28,12 +27,12 @@
         {% for student in students %}
           <tr class='clickable-row' data-href="{% url 'student-detail' student.id %}">
             <td>{{ forloop.counter}}</td>
-            <td>{{ student.surname}} {{student.firstname }} {{student.other_name }}</td>
-            <td>{{ student.registration_number}}</td>
+            <td>{{ student.name}}</td>
+            <td>{{ student.email}}</td>
             <td>{{ student.current_class}}</td>
             <td>{{ student.get_gender_display}}</td>
             <td>{{ student.parent_mobile_number}}</td>
-            <td>{{ student.get_current_status_display}}</td>
+
           </tr>
         {% endfor %}
 

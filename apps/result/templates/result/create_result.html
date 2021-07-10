@@ -2,7 +2,7 @@
 
 
 {% block title %}
-  Select Student(s) <span class="small">and then click on proceed</span>
+  Chọn học sinh để tạo điểm
 {% endblock title %}
 
 
@@ -11,7 +11,7 @@
     {% csrf_token %}
   <div class="card-header">
     <h3 class="card-title">
-      <input type="submit" class="btn btn-success" value="Proceed >">
+      <input type="submit" class="btn btn-success" value="Tạo">
     </h3>
 
     <div class="card-tools">
@@ -26,22 +26,22 @@
     <thead class="thead-light">
       <tr>
         <th><input type="checkbox" id="selecter"></th>
-        <th>Name</th>
-        <th>Current Class</th>
+        <th>Tên</th>
+        <th>Lớp</th>
       </tr>
     </thead>
     <tbody>
       {% for student in students %}
         <tr>
           <td><input type="checkbox" id="{{ student.id }}" name="students" value="{{ student.id}}"></td>
-          <td>{{student}} </td>
+          <td>{{student.name}} </td>
           <td>{{student.current_class}}</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
 
-  <input type="submit" class="btn btn-success mt-2" value="Proceed >">
+  <input type="submit" class="btn btn-success mt-2" value="Tạo">
 
 
 </form>

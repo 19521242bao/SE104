@@ -8,7 +8,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.forms import widgets
 from django.urls import reverse_lazy
-from django.db.models import F
+from django.db.models import F, Sum
 from apps.finance.models import Invoice
 from apps.result.models import Result
 
@@ -30,11 +30,12 @@ class StudentClassView(LoginRequiredMixin,ListView):
 class StudentDetailView(LoginRequiredMixin, DetailView):
     model = Student
     template_name = "students/student_detail.html"
-
+    all_score=0
     def get_context_data(self, **kwargs):
         context = super(StudentDetailView, self).get_context_data(**kwargs)
         context['payments'] = Invoice.objects.filter(student=self.object)
         context['results']=Result.objects.filter(student=self.object)
+        #context['overall']=Result.objects.filter(student=self.object).aggregate(Sum('exam_score'))
         return context
 
 
@@ -49,7 +50,6 @@ class StudentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.fields['date_of_birth'].widget = widgets.DateInput(
             attrs={'type': 'date'})
         form.fields['address'].widget = widgets.Textarea(attrs={'rows': 2})
-        form.fields['others'].widget = widgets.Textarea(attrs={'rows': 2})
         return form
 
 
@@ -63,11 +63,10 @@ class StudentUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         form = super(StudentUpdateView, self).get_form()
         form.fields['date_of_birth'].widget = widgets.DateInput(
             attrs={'type': 'date'})
-        form.fields['date_of_admission'].widget = widgets.DateInput(attrs={
-                                                                    'type': 'date'})
+        #form.fields['date_of_admission'].widget = widgets.DateInput(attrs={'type': 'date'})
         form.fields['address'].widget = widgets.Textarea(attrs={'rows': 2})
-        form.fields['others'].widget = widgets.Textarea(attrs={'rows': 2})
-       # form.fields['passport'].widget = widgets.FileInput()
+        #form.fields['others'].widget = widgets.Textarea(attrs={'rows': 2})
+        form.fields['passport'].widget = widgets.FileInput()
         return form
 
 

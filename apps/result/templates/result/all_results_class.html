@@ -5,17 +5,17 @@
   {% for key, result in results.items %}
     <div class="card">
       <div class="card-header">
-        {{result.student}}
+        {{result.student.name}}
       </div>
       <div class="card-body">
         <table class="table table-bordered table-sm">
           <thead class="thead-light">
             <tr>
               <th>Class</th>
-              <th>Number Student</th>
-                <th>Good Student</th>
-                <th>Ti le dat</th>
-                <th>Hoc ki</th>
+              <th>Số lượng học sinh</th>
+                <th>Số lượng đạt</th>
+                <th>Tỉ lệ đạt</th>
+                <th>Học kì</th>
             </tr>
           </thead>
 

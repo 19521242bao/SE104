@@ -3,14 +3,14 @@
 
 
 {% block title %}
-  Select all the subjects you want to create
+  Lựa chọn lớp để cập nhật điểm (chỉ lựa 1 lớp)
 {% endblock title %}
 
 
 {% block content %}
 
 
-  <p>You selected <b>{{ count }} students</b> from the previous page.</p>
+  <p>Bạn đã chọn<b>{{ count }} students</b> from the previous page.</p>
 
   <form method="POST">
     {% csrf_token %}

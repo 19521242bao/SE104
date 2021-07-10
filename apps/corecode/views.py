@@ -155,7 +155,7 @@ class ClassListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
   def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       context['form'] = StudentClassForm()
-      return context 
+      return context
 
 
 class ClassCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -192,6 +192,7 @@ def create_class_student(request):
     if 'finish' in request.POST:
       form = CreateStudent_ClassForm(request.POST)
       if form.is_valid():
+        success_message = 'New class successfully added'
         current_class= form.cleaned_data['current_class']
         students = request.POST['students']
         for student in students.split(','):

@@ -31,19 +31,22 @@
 
           <div class="float-right">
             <h4>Lớp: {{ object.name}} </h4>
+              <h4>Sĩ số: {{ students.count }}</h4>
+              <h4>Danh sách học sinh lớp {{ object.name }}</h4>
           </div>
         </div>
 
 
-    <h4>Class Student</h4>
+
     {% if students %}
       <table class="table table-sm table-bordered table-hover">
         <thead class="thead-light">
           <tr>
               <th>S/N</th>
-            <th>First name</th>
-            <th>Surname</th>
-            <th>Gender</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Giới tính</th>
+              <th>Số điện thoại</th>
             <th>Delete</th>
 
           </tr>
@@ -52,9 +55,11 @@
           {% for student in students %}
             <tr class='clickable-row' data-href="{% url 'student-detail' student.id %}">
               <td>{{ forloop.counter }}</td>
-              <td>{{student.firstname}}</td>
-                <td>{{student.surname}}</td>
-              <td>{{student.gender}}</td><td>
+              <td>{{student.name}}</td>
+                <td>{{student.email}}</td>
+              <td>{{student.gender}}</td>
+                <td>{{ student.parent_mobile_number }}</td>
+                <td>
                <div class="float-right">
                     <a href="{% url "delete_student_class" student.id  %}" class="btn btn-sm btn-info">Delete</a>
 
@@ -65,7 +70,7 @@
         </tbody>
       </table>
     {% else %}
-        <p>There are no student in class  {{object}}</p>
+        <p>Không có học sinh trong lớp {{object}}</p>
     {% endif %}
 
 

@@ -32,10 +32,8 @@
 
 
           <div class="float-right">
-            <h4>{{ object.surname }} </h4>
-            <h4>{{ object.firstname }} </h4>
-            <h4>{{ object.other_name }} </h4>
-            <h4>{{ object.registration_number }} </h4>
+            <h6>{{ object.name }} </h6>
+            <h6>{{ object.email }} </h6>
           </div>
         </div>
         <h5>Class: {{ object.current_class }} </h5>
@@ -46,7 +44,7 @@
         <div>
           <div class="form-group border-bottom row">
             <label class="col">
-              Date of Birth
+              Ngày sinh
             </label>
             <div class="col">
               {{ object.date_of_birth }}
@@ -55,7 +53,7 @@
 
           <div class="form-group border-bottom row">
             <label class="col">
-              Parent Mobile Number
+               Số điện thoại
             </label>
             <div class="col">
               {{ object.parent_mobile_number}}
@@ -64,7 +62,7 @@
 
           <div class="form-group border-bottom row">
             <label class="col">
-              Address
+              Địa chỉ
             </label>
             <div class="col">
               {{ object.address }}
@@ -84,7 +82,7 @@
       </div>
     </div>
 
-    <h4>Invoice/Payment History</h4>
+
     {% if payments %}
       <table class="table table-sm table-bordered table-hover">
         <thead class="thead-light">
@@ -95,20 +93,12 @@
             <th>balance</th>
           </tr>
         </thead>
-        <tbody>
-          {% for payment in payments %}
-            <tr class='clickable-row' data-href="{% url 'invoice-detail' payment.id %}">
-              <td>{{payment.session}} - {{payment.term}} - {{ payment.class_for}}</td>
-              <td>{{payment.total_amount_payable}}</td>
-              <td>{{payment.total_amount_paid}}</td>
-              <td>{{payment.balance}}</td>
-            </tr>
-          {% endfor %}
+
         </tbody>
       </table>
 
     {% else %}
-        <p>There are no payment history for {{object}}</p>
+
     {% endif %}
 
 
@@ -116,20 +106,26 @@
       <table class="table table-sm table-bordered table-hover">
         <thead class="thead-light">
           <tr>
-            <th>Subject</th>
-            <th>Test score</th>
-            <th>Final score</th>
-            <th>Overall</th>
-            <th>Rank</th>
+            <th>Môn học</th>
+            <th>Điểm 15p</th>
+            <th>Điểm 45p</th>
+            <th>Điểm trung bình</th>
+            <th>Học kì</th>
+              <th>Năm học</th>
+              <th>Xếp loại</th>
           </tr>
         </thead>
         <tbody>
+
           {% for result in results %}
               <tr>
+
               <td>{{ result.subject }}</td>
               <td>{{result.test_score}}</td>
               <td>{{result.exam_score}}</td>
               <td>{{result.total_score}}</td>
+              <td>{{ result.term}}</td>
+                  <td>{{ result.session}}</td>
               <td>{{result.grade}}</td>
               </tr>
           {% endfor %}

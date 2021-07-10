@@ -3,7 +3,7 @@
 
 
 {% block title %}
-  Select all the subjects you want to create
+  Lựa chọn môn để xem thống kê kết quả lớp
 {% endblock title %}
 
 
@@ -16,19 +16,19 @@
       {{ form.non_field_errors }}
     <div class="form-group row">
       {{ form.session.errors }}
-      <label class="col-2" for="{{ form.session.id_for_label }}">{{ form.session.label_tag}}</label>
+      <label class="col-2" for="{{ form.session.id_for_label }}">Năm học</label>
       <div class="col">{{ form.session | add_class:"form-control" }}</div>
     </div>
 
 
     <div class="form-group row">
       {{ form.term.errors }}
-      <label class="col-2" for="{{ form.term.id_for_label }}">{{ form.term.label_tag}}</label>
+      <label class="col-2" for="{{ form.term.id_for_label }}">Học kì</label>
       <div class="col">{{ form.term | add_class:"form-control" }}</div>
     </div>
        <div class="form-group row">
       {{ form.subjects.errors }}
-      <label class="col-2" for="{{ form.subjects.id_for_label }}">{{ form.subjects.label_tag}}</label>
+      <label class="col-2" for="{{ form.subjects.id_for_label }}">Môn</label>
       <div class="col">{{ form.subjects | add_class:"form-control" }}</div>
     </div>
 
@@ -43,12 +43,12 @@
         <table class="table table-bordered table-sm">
           <thead class="thead-light">
             <tr>
-                <th>Subject</th>
-              <th>Class</th>
-              <th>Number Student</th>
-                <th>Good Student</th>
-                <th>Ti le dat</th>
-                <th>Hoc ki</th>
+                <th>Môn</th>
+              <th>Lớp</th>
+              <th>Số lượng học sinh</th>
+                <th>Số lượng đạt</th>
+                <th>Tỉ lệ đạt</th>
+                <th>Học kì</th>
             </tr>
           </thead>
 

@@ -15,7 +15,7 @@ class SiteConfig(models.Model):
 
 class AcademicSession(models.Model):
   """ Academic Session """
-  name = models.CharField(max_length=200, unique=True)
+  name = models.CharField(max_length=200, unique=True,verbose_name="năm học")
   current = models.BooleanField(default=True)
 
   class Meta:
@@ -27,7 +27,7 @@ class AcademicSession(models.Model):
 
 class AcademicTerm(models.Model):
   """ Academic Term """
-  name = models.CharField(max_length=20, unique=True)
+  name = models.CharField(max_length=20, unique=True,verbose_name="học kì")
   current = models.BooleanField(default=True)
 
   class Meta:
@@ -39,7 +39,7 @@ class AcademicTerm(models.Model):
 
 class Subject(models.Model):
   """ Subject """
-  name = models.CharField(max_length=200, unique=True)
+  name = models.CharField(max_length=200, unique=True,verbose_name="môn học")
 
   class Meta:
     ordering = ['name']
@@ -51,8 +51,8 @@ class Subject(models.Model):
 class StudentClass(models.Model):
   name = models.CharField(max_length=200, unique=True)
   class Meta:
-    verbose_name = "Class"
-    verbose_name_plural = "Classes"
+    verbose_name = "Lớp"
+    verbose_name_plural = "Lớp"
     ordering = ['name']
 
   def __str__(self):

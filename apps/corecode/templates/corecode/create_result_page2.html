@@ -3,14 +3,14 @@
 
 
 {% block title %}
-  Select all the subjects you want to create
+  Lựa chọn lớp cho học sinh
 {% endblock title %}
 
 
 {% block content %}
 
 
-  <p>You selected <b>{{ count }} students</b> from the previous page.</p>
+  <p>Bạn đã chọn <b>{{ count }} học sinh</b> để thêm vào lớp.</p>
 
   <form method="POST">
     {% csrf_token %}
@@ -23,19 +23,19 @@
 
 <div class="form-group row">
       {{ form.session.errors }}
-      <label class="col-2" for="{{ form.session.id_for_label }}">{{ form.session.label_tag}}</label>
+      <label class="col-2" for="{{ form.session.id_for_label }}">Năm học</label>
       <div class="col">{{ form.session | add_class:"form-control" }}</div>
     </div>
 
 
     <div class="form-group row">
       {{ form.term.errors }}
-      <label class="col-2" for="{{ form.term.id_for_label }}">{{ form.term.label_tag}}</label>
+      <label class="col-2" for="{{ form.term.id_for_label }}">Học kì</label>
       <div class="col">{{ form.term | add_class:"form-control" }}</div>
     </div>
        <div class="form-group row">
       {{ form.current_class.errors }}
-      <label class="col-2" for="{{ form.current_class.id_for_label }}">{{ form.current_class.label_tag}}</label>
+      <label class="col-2" for="{{ form.current_class.id_for_label }}">Lớp</label>
       <div class="col">{{ form.current_class | add_class:"form-control" }}</div>
     </div>
 
@@ -45,7 +45,7 @@
     <input type="hidden" name="finish" value="True">
     <input type="hidden" name="students" value="{{ students }}">
 
-    <input type="submit" class="btn btn-success" value="Create">
+    <input type="submit" class="btn btn-success" value="Thêm">
   </form>
 
 {% endblock content %}

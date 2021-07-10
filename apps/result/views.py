@@ -66,12 +66,14 @@ def add_score(request):
         messages.success(request, 'Results successfully updated')
         return redirect('view-results')
     else:
-      class_name = request.POST['current_class']
-      results = Result.objects.filter(
-          session=request.current_session, term=request.current_term,current_class=class_name)
-      form = EditResults(queryset=results)
-      return render(request, 'result/edit_results2.html', {"formset": form})
-    class_id=request.POST.getlist('current_class')
+      if "current_class" in request.POST:
+
+        class_name = request.POST['current_class']
+        results = Result.objects.filter(
+            session=request.current_session, term=request.current_term,current_class=class_name)
+        form = EditResults(queryset=results)
+        return render(request, 'result/edit_results2.html', {"formset": form})
+      class_id=request.POST.getlist('current_class')
     print(class_id)
 
     if class_id:
@@ -92,6 +94,7 @@ def edit_results(request):
       form.save()
       messages.success(request, 'Results successfully updated')
       return redirect('edit-results')
+
   else:
     results = Result.objects.filter(
         session=request.current_session, term=request.current_term)
@@ -133,13 +136,13 @@ def all_results_view_class(request):
 
 def score_grade(score):
   if score <= 10 and score >= 8:
-    return 'A'
+    return 'Giỏi'
   elif score < 8 and score >= 6.5:
-    return 'B'
+    return 'Khá'
   elif score < 6.5 and score >= 5:
-    return 'C'
+    return 'Trung Bình'
   elif score >= 0 and score < 5:
-    return 'D'
+    return 'Không Đạt'
   else:
     return "Invalid Score"
 
@@ -191,20 +194,25 @@ def all_results_view(request):
     for j in range(1, len(grading_class)):
       if std[i][-1] == grading_class[j][0]:
         grading_class[j][2] += 1
-        if std[i][3] == "A":
+        if std[i][3] == "Giỏi":
           grading_class[j][1] += 1
 
-        if std[i][3] == "B":
+        if std[i][3] == "Khá":
           grading_class[j][1] += 1
-        if std[i][3] == "C":
+        if std[i][3] == "Trung Bình":
           grading_class[j][1] += 1
 
   x = len(std)
+
   for i in range(1, len(grading_class)):
+    if grading_class[i][2] == 0:
+      percent=0
+    else:
+      percent=int((grading_class[i][1]/(grading_class[i][2]))*100)
     bulk[grading_class[i][0]] = {
       "name_class": grading_class[i][0],
       "term": request.current_term,
-      "percent": int((grading_class[i][1]/grading_class[i][2])*100),
+      "percent": percent,
       "good": grading_class[i][1],
       "SL":grading_class[i][2]
     }

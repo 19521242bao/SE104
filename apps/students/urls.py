@@ -12,5 +12,4 @@ urlpatterns = [
   path('list/class',StudentClassView.as_view(),name='student_class'),
   path('upload/', StudentBulkUploadView.as_view(), name='student-upload'),
   path('downloadcsv/', downloadcsv, name='download-csv'),
-
 ]
